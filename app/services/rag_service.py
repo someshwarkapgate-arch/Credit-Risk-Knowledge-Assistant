@@ -146,6 +146,7 @@ def answer_question(
     # -----------------------------------------------------
     # Step 1: Retrieve Documents
     # -----------------------------------------------------
+    print("STEP 1: Starting retrieval")
 
     documents = retrieve_documents(
         question=question,
@@ -159,16 +160,20 @@ def answer_question(
     # Step 2: Format Context
     # -----------------------------------------------------
 
+    print("STEP 2: Documents retrieved:", len(documents))
+
     context = format_context(
         documents
     )
 
-
+    print("STEP 3: Context created")
     # -----------------------------------------------------
     # Step 3: Build Prompt
     # -----------------------------------------------------
 
     prompt = get_rag_prompt()
+
+    print("STEP 4: Prompt created")
 
     messages = prompt.invoke(
         {
@@ -181,13 +186,17 @@ def answer_question(
     # -----------------------------------------------------
     # Step 4: Generate Answer
     # -----------------------------------------------------
+    print("STEP 5A: About to create LLM")
 
     llm = get_llm()
+
+    print("STEP 5B: LLM created successfully")
 
     response = llm.invoke(
         messages
     )
-
+    print("STEP 6: LLM response received")
+    
 
     # -----------------------------------------------------
     # Step 5: Extract Sources

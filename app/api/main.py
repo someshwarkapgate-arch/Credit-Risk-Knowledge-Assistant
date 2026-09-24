@@ -1,24 +1,55 @@
 from fastapi import FastAPI
 
-# Create FastAPI application instance
+from app.api.routes.rag_routes import (
+    router as rag_router
+)
+
+
+# ---------------------------------------------------------
+# FastAPI Application
+# ---------------------------------------------------------
+
 app = FastAPI(
     title="Credit Risk Knowledge Assistant API",
-    description="Backend API for AI-powered Credit Risk Knowledge Assistant",
-    version="1.0.0")
+    description=(
+        "RAG-powered API for querying "
+        "credit risk and regulatory documents."
+    ),
+    version="1.0.0"
+)
 
 
-# Root endpoint
+# ---------------------------------------------------------
+# Register Routers
+# ---------------------------------------------------------
+
+app.include_router(
+    rag_router
+)
+
+
+# ---------------------------------------------------------
+# Root Endpoint
+# ---------------------------------------------------------
+
 @app.get("/")
-def home():
+def root():
+
     return {
-        "message": "Credit Risk Knowledge Assistant API is running"
+        "message":
+            "Credit Risk Knowledge Assistant API"
     }
 
 
-# Health check endpoint
+# ---------------------------------------------------------
+# Health Endpoint
+# ---------------------------------------------------------
+
 @app.get("/health")
 def health_check():
+
     return {
         "status": "healthy",
-        "service": "credit-risk-ai-assistant"
+        "service":
+            "credit-risk-knowledge-assistant"
     }
